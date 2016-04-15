@@ -10,10 +10,9 @@ public class client {
 	private static boolean goOn=true;
 	private static String ip;
 	private static boolean foundFile=false;
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
-		client client = new client();
-		client.run();
+		run();
 
 	}
 
@@ -21,10 +20,11 @@ public class client {
 	private static int state=CHECK_FOR_SERVER;
 	private static int ACTIVE = 1;
 
-	private int checkFrequency=3;//30 seconds
-	public void run() throws Exception{
+	private static int checkFrequency=3;
+	public static void run(){
 
 		while(true){
+
 			if(state==CHECK_FOR_SERVER){
 				if(!foundFile){
 					getHostIp();
@@ -33,7 +33,8 @@ public class client {
 					state=ACTIVE;
 				}else{
 					try {
-						Thread.sleep(1000*checkFrequency);
+						System.out.println("sleep1");
+						Thread.sleep((long)(1000*checkFrequency));
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -44,6 +45,7 @@ public class client {
 				state=CHECK_FOR_SERVER;
 				foundFile=false;
 				try {
+					System.out.println("sleep2");
 					Thread.sleep((long)(1000*checkFrequency));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -71,17 +73,17 @@ public class client {
 			}
 			try{
 
-			PrintStream PS = new PrintStream(SOCK.getOutputStream());
-			PS.println("Enter command: ");
-			InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
-			BufferedReader BR = new BufferedReader(IR);
-			String cmd = BR.readLine();
-			processCmd(cmd);
-			SOCK.close();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
+				PrintStream PS = new PrintStream(SOCK.getOutputStream());
+				PS.println("Enter command: ");
+				InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
+				BufferedReader BR = new BufferedReader(IR);
+				String cmd = BR.readLine();
+				processCmd(cmd);
+				SOCK.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
 
 		}
 
