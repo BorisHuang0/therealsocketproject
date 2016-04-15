@@ -13,18 +13,19 @@ public class server{
 	}
 
 	public void run() throws Exception{
-		Scanner scanner = new Scanner(System.in);
+
 		while(goOn){
 			ServerSocket ssocket = new ServerSocket(1025);
 			Socket SOCK = ssocket.accept();
-			System.out.print("Enter command: ");
-			String cmd = scanner.next();
 			InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
 			BufferedReader BR = new BufferedReader(IR);
-
 			String MESSAGE = BR.readLine();
-			System.out.println(MESSAGE);
-
+			System.out.print(MESSAGE);
+			Scanner scanner = new Scanner(System.in);
+			String cmd = scanner.next();
+			if(cmd.equals("quit")){
+				goOn=false;
+			}
 			PrintStream PS = new PrintStream(SOCK.getOutputStream());
 			PS.println(cmd);
 

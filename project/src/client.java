@@ -20,12 +20,10 @@ public class client {
 		while(goOn){
 
 			Socket SOCK = new Socket("128.4.111.223",1025);
-			// PrintStream PS = new PrintStream(SOCK.getOutputStream());
-			// PS.println("HELLO to Server From Client");
-
+			PrintStream PS = new PrintStream(SOCK.getOutputStream());
+			PS.println("Enter command: ");
 			InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
 			BufferedReader BR = new BufferedReader(IR);
-
 			String cmd = BR.readLine();
 			processCmd(cmd);
 			SOCK.close();
@@ -64,17 +62,15 @@ public class client {
 			r.keyRelease(KeyEvent.VK_ALT);
 			r.keyRelease(KeyEvent.VK_DOWN);
 
-	} catch (AWTException e) {
-		e.printStackTrace();
-	}
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void playAsianMusic(){
 		try {
-			System.out.println("1");
 			URL song = new URL("http://www.abrahamd.mcilvaine.net/audio/chinese-music.wav");
 			SoundDoer sd = new SoundDoer();
-			System.out.println("2");
 			sd.loadClip(song);
 			sd.playLoadedClip(0);
 
