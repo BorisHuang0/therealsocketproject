@@ -1,6 +1,7 @@
 
 import java.io.*;
 import java.net.*;
+import java.util.scanner;
 
 
 public class server{
@@ -12,21 +13,25 @@ public class server{
 	}
 
 	public void run() throws Exception{
-		ServerSocket ssocket = new ServerSocket(1025);
-		Socket SOCK = ssocket.accept();
-		InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
-		BufferedReader BR = new BufferedReader(IR);
+		booelan goOn=true;
+		Scanner scanner = new Scanner(System.in);
+		while(goOn){
+			System.out.print("Enter command: ");
+			String cmd = scanner.next();
+			ServerSocket ssocket = new ServerSocket(1025);
+			Socket SOCK = ssocket.accept();
+			InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
+			BufferedReader BR = new BufferedReader(IR);
 
-		String MESSAGE = BR.readLine();
-		System.out.println(MESSAGE);
+			String MESSAGE = BR.readLine();
+			System.out.println(MESSAGE);
 
-		if (MESSAGE != null) {
 			PrintStream PS = new PrintStream(SOCK.getOutputStream());
-			PS.println("MESSAGE received!");
-		}
-		
-		ssocket.close();
+			PS.println(cmd);
 
+
+			ssocket.close();
+	}
 
 	}
 
