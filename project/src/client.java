@@ -1,7 +1,8 @@
 
 import java.io.*;
 import java.net.*;
-import java.awt.Robot;
+import java.awt.*;
+import com.sun.glass.events.KeyEvent;
 
 public class client {
 
