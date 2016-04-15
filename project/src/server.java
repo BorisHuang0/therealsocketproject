@@ -22,16 +22,26 @@ public class server{
 			String MESSAGE = BR.readLine();
 			System.out.print(MESSAGE);
 			Scanner scanner = new Scanner(System.in);
-			String cmd = scanner.next();
+			String cmd=scanner.nextLine();
 			if(cmd.equals("quit")){
 				goOn=false;
 			}
-			PrintStream PS = new PrintStream(SOCK.getOutputStream());
-			PS.println(cmd);
+			if(cmd.equals("help")){
+				printHelp();
+			}
+			else{
+				PrintStream PS = new PrintStream(SOCK.getOutputStream());
+				PS.println(cmd);
+		  }
 
 
 			ssocket.close();
 	}
+
+	}
+
+	public static void printHelp(){
+
 
 	}
 
