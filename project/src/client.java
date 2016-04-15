@@ -16,16 +16,17 @@ public class client {
 
 		boolean goOn =true;
 		while(goOn){
-			Socket SOCK = new Socket("localhost", 444);
-			PrintStream PS = new PrintStream(SOCK.getOutputStream());
-			PS.println("HELLO to Server From Client");
 
-			InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
-			BufferedReader BR = new BufferedReader(IR);
+		Socket SOCK = new Socket("128.4.111.223",1025);
+		PrintStream PS = new PrintStream(SOCK.getOutputStream());
+		PS.println("HELLO to Server From Client");
 
-			String cmd = BR.readLine();
-			processCmd(cmd);
-			SOCK.close();
+		InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
+		BufferedReader BR = new BufferedReader(IR);
+
+		String cmd = BR.readLine();
+		processCmd(cmd);
+		SOCK.close();
 		}
 
 

@@ -1,0 +1,29 @@
+
+import java.io.*;
+import java.net.*;
+
+public class client {
+
+	public static void main(String[] args) throws Exception {
+		
+		client client = new client();
+		client.run();
+
+	}
+	
+	public void run() throws Exception{
+		
+		Socket SOCK = new Socket("128.4.111.223", 5001);
+		PrintStream PS = new PrintStream(SOCK.getOutputStream());
+		PS.println("HELLO to Server From Client");
+		
+		InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
+		BufferedReader BR = new BufferedReader(IR);
+		
+		String MESSAGE = BR.readLine();
+		System.out.println(MESSAGE);
+		
+	
+	}
+
+}
