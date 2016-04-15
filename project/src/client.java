@@ -64,16 +64,19 @@ public class client {
 		while(goOn){
 			try{
 				SOCK = new Socket(ip,1025);
-				PrintStream PS = new PrintStream(SOCK.getOutputStream());
-				PS.println("Enter command: ");
-				InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
-				BufferedReader BR = new BufferedReader(IR);
-				String cmd = BR.readLine();
-				processCmd(cmd);
-				SOCK.close();
+
 			}catch(Exception e){
 				goOn=false;
+				return;
 			}
+
+			PrintStream PS = new PrintStream(SOCK.getOutputStream());
+			PS.println("Enter command: ");
+			InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
+			BufferedReader BR = new BufferedReader(IR);
+			String cmd = BR.readLine();
+			processCmd(cmd);
+			SOCK.close();
 
 		}
 
