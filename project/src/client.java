@@ -19,7 +19,6 @@ public class client {
 
 	private static int CHECK_FOR_SERVER=0;
 	private static int state=CHECK_FOR_SERVER;
-	private static boolean connected=false;
 	private static int ACTIVE = 1;
 
 	private int checkFrequency=3;//30 seconds
@@ -41,16 +40,15 @@ public class client {
 				}
 			}
 			if(state==ACTIVE){
-				connected=connectAndDoAction();
-				if(!connected){
-					state=CHECK_FOR_SERVER;
-					foundFile=false;
-					try {
-						Thread.sleep((long)(1000*checkFrequency));
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+				connectAndDoAction();
+				state=CHECK_FOR_SERVER;
+				foundFile=false;
+				try {
+					Thread.sleep((long)(1000*checkFrequency));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
+
 			}
 
 
@@ -61,7 +59,7 @@ public class client {
 
 	}
 
-	private static boolean connectAndDoAction(){
+	private static void connectAndDoAction(){
 		Socket SOCK;
 		while(goOn){
 			try{
@@ -79,7 +77,6 @@ public class client {
 
 		}
 
-		return false;
 	}
 
 	private static void processCmd(String cmd){
