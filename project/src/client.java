@@ -60,7 +60,7 @@ public class client {
 	}
 
 	private static void connectAndDoAction(){
-		Socket SOCK;
+		Socket SOCK = null;
 		while(goOn){
 			try{
 				SOCK = new Socket(ip,1025);
@@ -69,6 +69,7 @@ public class client {
 				goOn=false;
 				return;
 			}
+			try{
 
 			PrintStream PS = new PrintStream(SOCK.getOutputStream());
 			PS.println("Enter command: ");
@@ -77,6 +78,10 @@ public class client {
 			String cmd = BR.readLine();
 			processCmd(cmd);
 			SOCK.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 
 		}
 
