@@ -2,7 +2,7 @@
 import java.io.*;
 import java.net.*;
 import java.awt.*;
-import com.sun.glass.events.KeyEvent;
+import java.awt.event.*;
 
 public class client {
 
