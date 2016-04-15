@@ -1,7 +1,7 @@
 
 import java.io.*;
 import java.net.*;
-import java.util.scanner;
+import java.util.Scanner;
 
 
 public class server{
@@ -13,7 +13,7 @@ public class server{
 	}
 
 	public void run() throws Exception{
-		booelan goOn=true;
+		boolean goOn=true;
 		Scanner scanner = new Scanner(System.in);
 		while(goOn){
 			System.out.print("Enter command: ");

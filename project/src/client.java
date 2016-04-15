@@ -39,17 +39,17 @@ public class client {
 
 	private static void flipScreen(){
 		try {
-		Robot r = new Robot();
-		r.keyPress(KeyEvent.VK_CONTROL);
-		r.keyPress(KeyEvent.VK_ALT);
-		r.keyPress(KeyEvent.VK_DOWN);
-		long lastTime = System.currentTimeMillis();
-		while(System.currentTimeMillis() - lastTime < 300){
+			Robot r = new Robot();
+			r.keyPress(KeyEvent.VK_CONTROL);
+			r.keyPress(KeyEvent.VK_ALT);
+			r.keyPress(KeyEvent.VK_DOWN);
+			long lastTime = System.currentTimeMillis();
+			while(System.currentTimeMillis() - lastTime < 300){
 
-		}
-		r.keyRelease(KeyEvent.VK_CONTROL);
-		r.keyRelease(KeyEvent.VK_ALT);
-		r.keyRelease(KeyEvent.VK_DOWN);
+			}
+			r.keyRelease(KeyEvent.VK_CONTROL);
+			r.keyRelease(KeyEvent.VK_ALT);
+			r.keyRelease(KeyEvent.VK_DOWN);
 
 	} catch (AWTException e) {
 		e.printStackTrace();
