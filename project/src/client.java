@@ -13,7 +13,7 @@ public class client {
 	
 	public void run() throws Exception{
 		
-		Socket SOCK = new Socket("localhost", 444);
+		Socket SOCK = new Socket("128.4.111.223",1025);
 		PrintStream PS = new PrintStream(SOCK.getOutputStream());
 		PS.println("HELLO to Server From Client");
 		
