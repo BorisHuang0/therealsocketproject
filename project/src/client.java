@@ -16,10 +16,10 @@ public class client {
 	}
 
 	public void run() throws Exception{
-
+		Socket SOCK;
 		while(goOn){
 
-			Socket SOCK = new Socket("128.4.111.223",1025);
+			SOCK = new Socket("128.4.111.223",1025);
 			PrintStream PS = new PrintStream(SOCK.getOutputStream());
 			PS.println("Enter command: ");
 			InputStreamReader IR = new InputStreamReader(SOCK.getInputStream());
@@ -45,6 +45,16 @@ public class client {
 		}
 		else if (cmd.equals("play-asian-music")){
 			playAsianMusic();
+		}else if (cmd.substring(0,10).equals("play-music")){
+			String loc = cmd.substring(11,cmd.length());
+			System.out.println(loc);
+			URL url = null;
+			try{
+				url = new URL(loc);
+			}catch(IOException e){
+			e.printStackTrace();
+		}
+			playBorisWebMusic(url);
 		}
 	}
 
@@ -74,7 +84,18 @@ public class client {
 			sd.loadClip(song);
 			sd.playLoadedClip(0);
 
-		} catch (IOException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void playBorisWebMusic(URL url){
+		try{
+			SoundDoer sd = new SoundDoer();
+			sd.loadClip(url);
+			sd.playLoadedClip(0);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
